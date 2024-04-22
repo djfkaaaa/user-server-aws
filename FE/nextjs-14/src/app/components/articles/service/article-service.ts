@@ -1,9 +1,8 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import { IArticles } from '../model/article-model';
 import { findAllArticlesAPI, findOneArticleAPI, findarticlebyAPI, postArticleAPI } from './article-api';
-import axios from 'axios';
-import { API } from '@/redux/common/enums/API';
-import AxiosConfig, { instance } from '@/redux/common/configs/axios-config';
+
+
 
 export const getArticles : any = createAsyncThunk(
     'articles/findAllArticles',

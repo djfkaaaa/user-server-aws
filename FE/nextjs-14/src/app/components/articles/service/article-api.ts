@@ -1,4 +1,4 @@
-import {instance} from '@/redux/common/configs/axios-config'
+import instance from '@/redux/common/configs/axios-config'
 import { IArticles } from '../model/article-model'
 
 export const findAllArticlesAPI = async (page : number) => {

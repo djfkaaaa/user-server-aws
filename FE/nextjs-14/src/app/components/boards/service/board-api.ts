@@ -1,4 +1,4 @@
-import { instance } from "@/redux/common/configs/axios-config"
+import  instance  from "@/redux/common/configs/axios-config"
 
 export const findAllBoardsAPI = async (page : number) => {
     try{

@@ -1,10 +1,7 @@
 'use client';
-import { use, useEffect, useState } from "react";
-import axios from 'axios'
+import {useRef, useState } from "react";
 import Link from "next/link";
-
 import { useRouter } from "next/navigation";
-
 import { useDispatch, useSelector } from "react-redux";
 import { PG } from "@/redux/common/enums/PG";
 import { IUser } from "./components/users/model/user-model";
@@ -15,15 +12,18 @@ import { jwtDecode } from "jwt-decode";
 
 const LoginPage = () => {
   const dispatch = useDispatch()
-  const auth = useSelector(getLoginMessage)
-  const [user, setUser] = useState({} as IUser)
-  const ID_CHECK = /^[a-z0-9]+[a-z0-9]{5,19}$/g;
-  const PW_CHECK = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[()%@'*|=${.}?/!<>+_#*]).{8,}$/;
-  // const TestUsername = /^flase$/g;
 
   const [isWrongId, setisWrongId] = useState(false)
   const [isWrongPw, setisWrongPw] = useState(false)
+  const [user, setUser] = useState({} as IUser)
+
+  const auth = useSelector(getLoginMessage)
   const getUsers:Boolean = useSelector(getUserByUsername)
+
+  const ID_CHECK = /^[a-z0-9]+[a-z0-9]{5,19}$/g;
+  const PW_CHECK = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[()%@'*|=${.}?/!<>+_#*]).{8,}$/;
+
+  const passwordRef = useRef<HTMLInputElement>(null);
 
   const handleUsername = (e: any) => {
     setUser({
@@ -57,22 +57,56 @@ const LoginPage = () => {
 
   const handleSubmit = () => {
     dispatch(exitsByUsername(user.username))
-    dispatch(loginUser(user))}
-
-  useEffect(()=>{
-    if(auth.message==='Success'){
-      setCookie({},'message',auth.message,{ httpOnly: false, path: '/' })
-      setCookie({},'token',auth.token,{ httpOnly: false, path: '/' })
-      console.log('서버에서 넘어온 메세지' + parseCookies().message)
-      console.log('서버에서 넘어온 토큰' + parseCookies().token)
-      console.log('token decode 내용 = ')
-      console.log(jwtDecode<any>(parseCookies().token))
-      router.push(`${PG.BOARD}/list`)
-    }
-    else{
-      console.log('FAILURE')
-    }
-  },[auth])
+    .then((res: any)=>{
+      if(res.payload === true){
+        dispatch(loginUser(user))
+      .then((res:any)=>{
+          setCookie({},'message',res.payload.message,{ httpOnly: false, path: '/' })
+          setCookie({},'accessToken',res.payload.accessToken,{ httpOnly: false, path: '/' })
+          console.log('서버에서 넘어온 메세지' + parseCookies().message)
+          console.log('서버에서 넘어온 토큰' + parseCookies().accessToken)
+          console.log('token decode 내용 = ')
+          console.log(jwtDecode<any>(parseCookies().accessToken))
+          router.push(`${PG.BOARD}/list`)
+          router.refresh()
+          
+      }).catch((err:any)=>{
+        console.log('로그인 실패')
+      })
+      }
+      else{
+        console.log('id가 존재하지 않습니다.')
+        // setisWrongId(true)
+        // setisWrongPw(true)
+        !getUsers
+        if(passwordRef.current){
+          passwordRef.current.value = "";
+        }
+      }})
+      .catch((err:any)=>{
+        console.log('실패')
+      })
+      .finally(()=>{
+        console.log('최종적으로 이뤄저야할 로직')
+      })
+      
+      }
+  
+  
+  // useEffect(()=>{
+  //   if(auth.message==='Success'){
+  //     setCookie({},'message',auth.message,{ httpOnly: false, path: '/' })
+  //     setCookie({},'token',auth.token,{ httpOnly: false, path: '/' })
+  //     console.log('서버에서 넘어온 메세지' + parseCookies().message)
+  //     console.log('서버에서 넘어온 토큰' + parseCookies().token)
+  //     console.log('token decode 내용 = ')
+  //     console.log(jwtDecode<any>(parseCookies().token))
+  //     router.push(`${PG.BOARD}/list`)
+  //   }
+  //   else{
+  //     console.log('FAILURE')
+  //   }
+  // },[auth])
   
   
   return(<div className="h-[70vh] flex items-center justify-center">
@@ -111,6 +145,7 @@ const LoginPage = () => {
           </label>
         </div>
         <input
+          ref = {passwordRef}
           onChange={handlePassword}
           className="text-gray-700 border border-gray-300 rounded py-2 px-4 block w-full focus:outline-2 focus:outline-blue-700"
           type="password"
