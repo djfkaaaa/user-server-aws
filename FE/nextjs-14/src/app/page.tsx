@@ -68,6 +68,7 @@ const LoginPage = () => {
           console.log('token decode 내용 = ')
           console.log(jwtDecode<any>(parseCookies().accessToken))
           router.push(`${PG.BOARD}/list`)
+          // router.push(`${PG.ARTICLE}/`)
           router.refresh()
           
       }).catch((err:any)=>{

@@ -10,7 +10,7 @@ export default function CardButton({id,title,description}:IBoards){
     return(
         <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <Link key={id} href={`${PG.ARTICLE}/getBoardId/${id}`}>
-                <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
+                <img className="rounded-t-lg" src="/img/user/profile.jpg" alt="" />
             </Link>
             <div className="p-5">
                 <Link key={id} href={`${PG.ARTICLE}/getBoardId/${id}`}>

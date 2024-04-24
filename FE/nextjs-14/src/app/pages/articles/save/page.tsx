@@ -47,18 +47,41 @@ export default function save(props:any){
       alert('작성 완료')
       router.push(`${PG.ARTICLE}/getBoardId/${article.boardId}`)
     }
+//////////////////////////////////////
+
+    const options = [
+      {id:1, title:"REVIEW", content: "리뷰"},
+      {id:2, title:"QNA", content: "Q&A"},
+      {id:3, title:"FREE", content: "자유게시판"}
+    ]
+
+    const [content, setContent] = useState({} as IArticles)
+
+    // const selectHandler = (e:any) => {
+    //   setContent({
+    //     ...content,
+    //     boardId:e.target.value
+    //   })
+    // }
+
 
 
     return(<>
 <form className="max-w-sm mx-auto">
   <label htmlFor="countries" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
-  <select onChange={pickBoardNum} id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+  <select onChange={pickBoardNum}  //원래 pickBoardNum 
+  id="countries" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
    focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700
     dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500
      dark:focus:border-blue-500">
-    <option selected>Choose a Board</option>
-    <option value="1">REVIEW</option>
-    <option value="2">QnA</option>
+      {/* <option selected>Choose a Board</option> */}
+      {
+        options.map((item,index)=>(
+          <option key={item.id} title={item.title} value={article.boardId}>{item.content}</option>
+        ))
+      }
+    
+    
     
   </select>
 </form>

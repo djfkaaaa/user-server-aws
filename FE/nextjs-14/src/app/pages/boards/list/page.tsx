@@ -1,9 +1,4 @@
 'use client';
-
-
-
-
-
 import CardButton from "@/app/atoms/button/CardButton";
 import { IBoards } from "@/app/components/boards/model/board-model";
 import { getBoards } from "@/app/components/boards/service/board-service";
@@ -17,11 +12,11 @@ import { useDispatch, useSelector } from "react-redux";
 export default function boardCards(){
 
     const router = useRouter()
-    // const dispatch = useDispatch()
-    // const allBoards = useSelector(getAllBoards)
-    // useEffect(() => {
-    //     dispatch(getBoards(1))
-    // },[dispatch])
+    const dispatch = useDispatch()
+    const allBoards : IBoards[] = useSelector(getAllBoards)
+    useEffect(() => {
+        dispatch(getBoards(1))
+    },[dispatch])
     
     
     // useEffect(()=>{
@@ -30,7 +25,7 @@ export default function boardCards(){
 
     return(<>
     <h2>게시판 목록</h2>
-    {/* {allBoards.map((board: IBoards)=>(<CardButton id={board.id||0} title={board.title||""} description={board.description||""}/>))} */}
+    {allBoards.map((board)=>(<CardButton id={board.id||0} title={board.title||""} description={board.description||""}/>))}
     </>)
 }
 

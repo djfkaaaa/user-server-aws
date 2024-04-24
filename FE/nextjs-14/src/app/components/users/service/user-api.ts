@@ -5,7 +5,7 @@ import constructWithOptions from 'styled-components/dist/constructors/constructW
 
 export const fetchAllUsersAPI = async (page: number) =>{
     try{
-        const response = await instance.get('/users/list',{ 
+        const response = await instance().get('/users/list',{ 
 
             params: {page, limit: 10}
         })
@@ -18,17 +18,17 @@ export const fetchAllUsersAPI = async (page: number) =>{
 }
 
 export const fetchOneUserAPI = async (id: number) => {
-        return(await instance.get('/users/detail',{
+        return(await instance().get('/users/detail',{
             params: {id}
         })).data
 }
 
 export const fetchCountUserAPI = async () => {
-        return(await instance.get('/users/count')).data
+        return(await instance().get('/users/count')).data
 }
 
 export const fetchDeleteUserAPI = async (id : number) => {
-    return(await instance.delete('/users/delete',{
+    return(await instance().delete('/users/delete',{
         params: {id}
     })).data
 }
@@ -36,7 +36,7 @@ export const fetchDeleteUserAPI = async (id : number) => {
 
 export const fetchModiUserAPI = async (user:IUser) => {
     try{
-        return(await instance.put('/users/modify',user)).data
+        return(await instance().put('/users/modify',user)).data
         }
         catch(error){
             console.log(error)
@@ -47,7 +47,7 @@ export const fetchModiUserAPI = async (user:IUser) => {
 export const loginUserAPI = async (user:IUser) => {
     console.log(`login api에 넘어온 파라미터 : ${JSON.stringify(user)}`)
     try{
-        const response = await instance.post('/users/login',user)
+        const response = await instance().post('/auth/login',user)
         return response.data
     }catch(error){
         console.log(error)
@@ -56,13 +56,13 @@ export const loginUserAPI = async (user:IUser) => {
 }
 
 export const exitsByUsernameAPI = async (username: String) => {
-    return(await instance.get('/users/getusername',{
+    return(await instance().get('/auth/getusername',{
         params: {username}
     })).data
 }
 
 export const logoutAPI = async (username : String) => {
-    return(await instance.get('/users/logout',{
+    return(await instance().get('/users/logout',{
         params: {username}
     })).data
 }
