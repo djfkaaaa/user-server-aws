@@ -13,7 +13,7 @@ import { useDispatch } from "react-redux";
 import {useForm} from "react-hook-form";
 
 
-export default function save(props:any){
+export default function update(props:any){
 
     const {register, 
       handleSubmit, 

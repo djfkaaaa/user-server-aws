@@ -43,3 +43,4 @@ export const postArticleAPI = async (article:IArticles)=> {
         return error
     }
 }
+

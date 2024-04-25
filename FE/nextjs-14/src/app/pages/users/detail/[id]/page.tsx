@@ -47,7 +47,7 @@ export default function UsersPage({params}:any){
           <span>전화번호 : </span><input type="text" onChange={handleClickPn} placeholder={getUsers.phoneNumber}/><br />
           <span>직업 : </span><input type="text" onChange={handleClickJob} placeholder={getUsers.job}/><br />
           <button onClick={postJava}>수정</button> <br />
-          <button onClick={handleDelete}>삭제</button>
+          <button onClick={handleDelete}>탈퇴</button>
         </>
        
         

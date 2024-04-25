@@ -20,7 +20,7 @@ export default function LinkButton({id,title,path}:ILinkButton){
 }
 
 export const linkButtonTiltes = [
-    {id: 0, title:'사용자목록', path:`${PG.USER}/findUsers`},
+    {id: 0, title:'마이페이지', path:`${PG.USER}/detail/${1}`},
     {id: 1, title:'게시글목록', path:`${PG.ARTICLE}`},
     {id: 2, title:'게시판목록', path:`${PG.BOARD}`},
     {id: 3, title:'카운터', path:`${PG.COUNT}/demos/redux-counter`},

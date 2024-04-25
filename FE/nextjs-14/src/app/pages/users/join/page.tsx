@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { API } from "@/redux/common/enums/API";
 import AxiosConfig from "@/redux/common/configs/axios-config";
 import { PG } from "@/redux/common/enums/PG";
+import instance from "@/redux/common/configs/axios-config";
 
  
 export default function join(){
@@ -36,7 +37,7 @@ export default function join(){
     const url = `${process.env.NEXT_PUBLIC_API_URL}/users/save` 
     const data = {username,password,name,phoneNumber,job} 
     const config = AxiosConfig()
-    axios.post(url,data,config)
+    axios.post(url,data)
     .then(res=>
         {alert(JSON.stringify(res.data)) 
         router.push(`${PG.USER}/login`)

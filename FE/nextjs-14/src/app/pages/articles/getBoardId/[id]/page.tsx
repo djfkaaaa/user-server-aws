@@ -7,6 +7,7 @@ import { getAllArticles } from "@/app/components/articles/service/article-slice"
 import { PG } from "@/redux/common/enums/PG";
 import { Box, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -26,7 +27,9 @@ export default function getBoardsId(props:any){
 
     const dispatch = useDispatch()
     const allArticles: IArticles[] = useSelector(getAllArticles)
+    const router = useRouter()
     useEffect(()=>{
+      
         dispatch(findarticlebyboard(props.params.id))
     },[dispatch])
 
@@ -48,10 +51,9 @@ export default function getBoardsId(props:any){
             );
           })}
         </div>
-        <td>
+        <td colSpan={3}>
           <MoveButton text={"글쓰기"} path={`${PG.ARTICLE}/save`}/>
-        
-          </td>
+        </td>
       </div>
           <h2> 게시글 수 :{allArticles.length} </h2> 
           <Box sx={{ height: "100%", width: '100%' }}>

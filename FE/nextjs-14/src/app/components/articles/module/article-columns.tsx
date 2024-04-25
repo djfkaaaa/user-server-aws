@@ -75,6 +75,24 @@ export default function Columns() : GridColDef[]{
             headerName: '수정일',
             renderCell: ({row}:CellType) =>
             <Typography textAlign="center" sx={{fontSize:"1.5rem"}}>{row.modDate}</Typography>
+        },
+        // {
+        //     flex: 0.04,
+        //     minWidth: 0,
+        //     sortable: false,
+        //     field: 'modify',
+        //     headerName: '수정',
+        //     renderCell: ({row}:CellType) => <Link href={`${PG.ARTICLE}/update/${row.id}`}>
+        //      <Typography textAlign="center" sx={{fontSize:"1.5rem"}}>수정</Typography></Link>
+        // },
+        {
+            flex: 0.04,
+            minWidth: 0,
+            sortable: false,
+            field: 'delete',
+            headerName: '삭제',
+            renderCell: ({row}:CellType) => <Link href={""}>
+            <Typography textAlign="center" sx={{fontSize:"1.5rem"}}>삭제</Typography></Link>
         }
     ]
 }
