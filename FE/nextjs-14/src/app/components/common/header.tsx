@@ -1,12 +1,15 @@
 'use client';
 import * as React from 'react';
-import { Link } from '@mui/material';
+import { Link, Typography } from '@mui/material';
 import LinkButton, { linkButtonTiltes } from '@/app/atoms/button/LinkButton';
 import { useEffect, useState } from 'react';
 import { destroyCookie, parseCookies } from 'nookies';
-import { useDispatch } from 'react-redux';
-import { logout } from '../users/service/user-service';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchOneUser, logout } from '../users/service/user-service';
 import { useRouter } from 'next/navigation';
+import { IUser } from '../users/model/user-model';
+import { getUserById } from '../users/service/user-slice';
+import { jwtDecode } from 'jwt-decode';
 
 
 
@@ -15,10 +18,14 @@ function ResponsiveAppBar() {
   const [showProfile, setShowProfile] = useState(false)
   const dispatch = useDispatch()
   const router = useRouter()
+  const getUser:IUser = useSelector(getUserById)
+  let token : string = "";
 
   useEffect(()=>{
     if(parseCookies().accessToken){
       setShowProfile(true)
+      token = parseCookies().accessToken;
+      dispatch(fetchOneUser(jwtDecode<any>(token).userId));
     }else{
       setShowProfile(false)
     }
@@ -39,6 +46,7 @@ function ResponsiveAppBar() {
   }
 
   return (
+  
   <nav className="bg-white border-gray-200 dark:bg-gray-900">
   <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
   <Link href="http://localhost:3000" className="flex items-center space-x-3 rtl:space-x-reverse">
@@ -51,8 +59,8 @@ function ResponsiveAppBar() {
       </button>}
       {showProfile &&
           <div className="flex px-4 py-3 float-end">
-            <span className="block text-sm text-gray-900 dark:text-white">Bonnie Green</span>
-            <span className="block text-sm  text-gray-500 truncate dark:text-gray-400 mx-5">name@flowbite.com</span>
+            <span className="block text-sm text-gray-900 dark:text-white">{getUser.username}</span>
+            <span className="block text-sm  text-gray-500 truncate dark:text-gray-400 mx-5">{getUser.name}</span>
             <span 
             onClick={logoutHandler}
             className="block text-sm  text-gray-500 truncate dark:text-gray-400"><a href="#"> Sign out </a></span>
